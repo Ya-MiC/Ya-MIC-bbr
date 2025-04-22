@@ -1,0 +1,30 @@
+# BBR Speed Test Tool
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+用于测试启用BBR后的网络性能的工具。
+
+## 功能特性
+- 检测BBR是否启用
+- 测试网络延迟
+- 测量下载/上传速度
+- 简单易用的命令行界面
+
+## 安装使用
+
+### 前置要求
+- Linux系统
+- Python 3.6+
+- 已启用BBR（可使用本项目的安装脚本）
+
+### 快速开始
+```bash
+# 克隆仓库
+git clone https://github.com/yourusername/bbr-speedtest.git
+cd bbr-speedtest
+
+# 安装依赖
+pip install -r src/requirements.txt
+
+# 运行测速工具
+python src/speedtest.py

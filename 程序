@@ -1,0 +1,12 @@
+## 📂 项目结构
+Ya-MIC-BBR-Manager/
+├── app.py                  # Flask 后端（可选，用于动态功能）
+├── static/                 # 静态资源（CSS/JS/图片）
+│   ├── style.css           # 自定义样式
+├── templates/              # HTML 模板
+│   └── index.html          # 项目主页
+├── docs/                   # Markdown 文档（GitHub Pages 适用）
+│   └── README.md           # 详细文档
+├── LICENSE                 # 开源协议（建议 MIT）
+└── README.md               # GitHub 主自述文件
+---

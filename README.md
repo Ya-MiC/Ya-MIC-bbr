@@ -1,9 +1,11 @@
 # Ya-MIC - BBR 网络加速管理脚本
+# All project source codes are not open yet but projects can be used
 
 ![GitHub](https://img.shields.io/badge/License-MIT-blue.svg)  
 ![BBR](https://img.shields.io/badge/BBR-Optimized-green.svg)  
 
 **Ya-MIC** 是一个基于 **byJoey 思路** 优化的 BBR（Bottleneck Bandwidth and Round-trip）管理脚本，旨在提供更高效的 TCP 拥塞控制，优化网络传输性能，降低延迟并提升带宽利用率。
+
 
 ---
 

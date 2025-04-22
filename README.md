@@ -1,6 +1,4 @@
-Here's a **BBR (Bottleneck Bandwidth and Round-trip) Optimization Guide** in Markdown format that you can save as `bbr-guide.md` or `README.md` in your GitHub project. This file explains BBR, how to enable it, and its benefits:
 
----
 
 # **BBR (Bottleneck Bandwidth and Round-trip) Optimization Guide**  
 *A high-performance TCP congestion control algorithm for Linux*  
@@ -103,4 +101,3 @@ MIT © [Ya-MIC](https://github.com/Ya-MIC)
 
 ---
 
-This file is **ready to use** in your GitHub repo! Customize the links, commands, or add a **"Benchmarks"** section if needed. Let me know if you'd like a version with more technical details. 🚀

@@ -71,6 +71,7 @@ MIT License | Copyright © 2024 Ya-MIC
 希望这个模板能帮到您！如果需要更具体的技术细节或调整风格，请随时告知。
 
 
+## byJoey思路：
 
 BBR 管理脚本
 这是一个功能强大又超可爱的脚本，用于管理Linux下的BBR拥有塞控制算法和队列管理算法。无论是安装BBR v3，还是切换到更适合您的加速方式，这里统统搞定！
@@ -84,8 +85,15 @@ BBR 管理脚本
 👀实时查看当前 TCP 拥塞算法和队列算法
 🎨美化的输出界面，让剧本灵魂更多
 
+byJoey思路：
+
 一键运行脚本
-bash <(curl -l -s https://raw.githubusercontent.com/byJoey/Actions-bbr-v3/refs/heads/main/install.sh)
+```bash
+<(curl -l -s https://raw.githubusercontent.com/byJoey/Actions-bbr-v3/refs/heads/main/install.sh)
+
+```
+
+
 
 操作界面
 ╭( ･ㅂ･)و ✧ 你可以选择以下操作哦：

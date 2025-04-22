@@ -1,124 +1,106 @@
-# Ya-MIC - BBR 网络加速管理脚本
-# All project source codes are not open yet but projects can be used
-
-![GitHub](https://img.shields.io/badge/License-MIT-blue.svg)  
-![BBR](https://img.shields.io/badge/BBR-Optimized-green.svg)  
-
-**Ya-MIC** 是一个基于 **byJoey 思路** 优化的 BBR（Bottleneck Bandwidth and Round-trip）管理脚本，旨在提供更高效的 TCP 拥塞控制，优化网络传输性能，降低延迟并提升带宽利用率。
-
+Here's a **BBR (Bottleneck Bandwidth and Round-trip) Optimization Guide** in Markdown format that you can save as `bbr-guide.md` or `README.md` in your GitHub project. This file explains BBR, how to enable it, and its benefits:
 
 ---
 
-## 📌 功能特性
-✅ **一键安装 & 管理 BBR**（支持 BBRv2/v3 及自定义优化参数）  
-✅ **智能动态调整**（基于 AIMD 策略改进，增强公平性和响应速度）  
-✅ **多平台支持**（适配主流 Linux 发行版：Debian/Ubuntu/CentOS 等）  
-✅ **低开销 & 高性能**（优化内核参数，减少资源占用）  
-✅ **未来扩展性**（持续更新，计划支持 QUIC 和更灵敏的 RTT 探测）  
+# **BBR (Bottleneck Bandwidth and Round-trip) Optimization Guide**  
+*A high-performance TCP congestion control algorithm for Linux*  
+
+![BBR Logo](https://img.shields.io/badge/BBR-Optimized-green)  
+![Linux](https://img.shields.io/badge/OS-Linux-blue)  
+![License](https://img.shields.io/badge/License-MIT-orange)  
 
 ---
 
-## 🚀 快速开始
+## **📌 What is BBR?**  
+BBR (**Bottleneck Bandwidth and Round-trip propagation time**) is a **TCP congestion control algorithm** developed by Google. Unlike traditional loss-based algorithms (e.g., CUBIC), BBR:  
+✅ **Dynamically adjusts sending rates** based on real-time bandwidth and latency.  
+✅ **Reduces bufferbloat** (excessive queuing delays).  
+✅ **Improves throughput** on high-latency or lossy networks (e.g., international connections).  
 
-### 安装方式
+---
+
+## **🚀 How to Enable BBR on Linux**  
+
+### **1. Check Current Congestion Control**  
 ```bash
-wget https://github.com/Ya-MIC/bbr-manager/raw/main/install.sh
-chmod +x install.sh
-sudo ./install.sh
+sysctl net.ipv4.tcp_congestion_control
+```
+(Default: usually `cubic` or `reno`)
+
+### **2. Enable BBR (One-Time)**  
+```bash
+sudo bash -c 'echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf'
+sudo bash -c 'echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf'
+sudo sysctl -p  # Apply changes
 ```
 
-### 配置选项
-运行脚本后，可选择以下模式：
-- **标准 BBR**（默认优化参数）  
-- **激进模式**（更高带宽利用率，适合低丢包网络）  
-- **兼容模式**（平衡延迟和吞吐量）  
-
-### 卸载脚本
+### **3. Verify BBR is Active**  
 ```bash
-sudo ./install.sh --uninstall
+sysctl net.ipv4.tcp_congestion_control  # Should output "bbr"
+lsmod | grep bbr  # Check if BBR module is loaded
 ```
 
 ---
 
-## 📚 技术背景
-本脚本基于 **byJoey 的 BBR 优化思路**，主要改进包括：
-- **动态 AIMD 混合策略**：在 BBR 基础上引入更平滑的速率调整，减少突发流量影响。  
-- **RTT 自适应探测**：优化探测间隔，避免过度占用带宽。  
-- **多队列支持**：适配现代多核服务器，减少锁竞争。  
-
----
-
-## 🔮 未来计划
-- [ ] **BBRv3 深度适配**（测试最新 Linux 内核的 BBR 改进）  
-- [ ] **QUIC/HTTP3 支持**（扩展至 UDP 传输层优化）  
-- [ ] **可视化监控面板**（实时查看带宽、延迟等指标）  
-
----
-
-## 📜 许可证
-MIT License | Copyright © 2024 Ya-MIC  
-
----
-
-## 🤝 贡献与反馈
-欢迎提交 Issue 或 PR！  
-📧 联系作者：`cao417090217@gmail.com`  
-
----
-
-### 备注
-- 请根据实际脚本功能调整参数和描述。  
-
-
-
-
-BBR 管理脚本
-这是一个功能强大又超可爱的脚本，用于管理Linux下的BBR拥有塞控制算法和队列管理算法。无论是安装BBR v3，还是切换到更适合您的加速方式，这里统统搞定！
-主要支持Ubuntu系统
-
-🌟功能列表
-👑一键安装 BBR v3 内核
-🍰切换加速模式（BBR+FQ、BBR+CAKE 等）
-⚙️开启/关闭 BBR
-🗑️卸载加速内核，告别不需要的内核版本
-👀实时查看当前 TCP 拥塞算法和队列算法
-🎨美化的输出界面，让剧本灵魂更多
-
-byJoey思路：
-
-一键运行脚本
+## **⚙️ Advanced Tuning (Optional)**  
+### **BBR v2/v3 (Kernel ≥5.10+)**  
 ```bash
-<(curl -l -s https://raw.githubusercontent.com/byJoey/Actions-bbr-v3/refs/heads/main/install.sh)
+# For BBRv2 (if compiled in kernel):
+sudo bash -c 'echo "net.ipv4.tcp_congestion_control=bbr2" >> /etc/sysctl.conf'
 
+# For BBRv3 (latest Linux kernels):
+sudo bash -c 'echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf'
 ```
 
+### **Custom Parameters**  
+```bash
+# Increase TCP buffer sizes (adjust based on your bandwidth):
+echo "net.core.rmem_max=4194304" | sudo tee -a /etc/sysctl.conf
+echo "net.core.wmem_max=4194304" | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+```
 
+---
 
-操作界面
-╭( ･ㅂ･)و ✧ 你可以选择以下操作哦：
-  1. 🛠️  安装 BBR v3
-  2. 🔍 检查是否为 BBR v3
-  3. ⚡ 使用 BBR + FQ 加速
-  4. ⚡ 使用 BBR + FQ_PIE 加速
-  5. ⚡ 使用 BBR + CAKE 加速
-  6. 🔧 开启或关闭 BBR
-  7. 🗑️  卸载
+## **📊 Performance Comparison**  
+| **Metric**       | **CUBIC (Default)** | **BBR** | **BBRv2/v3** |  
+|------------------|---------------------|---------|--------------|  
+| **Throughput**  | Moderate            | High    | Very High    |  
+| **Latency**     | Variable            | Low     | Very Low     |  
+| **Fairness**    | Good                | Better  | Best         |  
 
+---
 
-一切以脚本内部数据为准
+## **⚠️ Notes & Caveats**  
+1. **Kernel Requirement**: BBR requires **Linux 4.9+**. For BBRv2/v3, use **5.10+**.  
+   - Check kernel: `uname -r`  
+2. **Not All Networks Benefit**: BBR excels in high-latency/lossy networks but may underperform in local LANs.  
+3. **Compatibility Issues**: Some outdated middleboxes (e.g., firewalls) may interfere.  
 
-BBR + FQ 是最常见的方案，适用于大多数场景
+---
 
-记得备份你的内核
-免责声明：任何使用问题请自负风险！
+## **📚 Further Reading**  
+- [Google BBR Paper](https://research.google/pubs/pub45646/)  
+- [Kernel Documentation](https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt)  
 
-🌟特别鸣谢
-感谢Naochen2799/Latest-Kernel-BBR3项目提供的技术支持和灵感参考。
+---
 
+## **🎯 Why Use This Script?**  
+This project (`Ya-MIC BBR Manager`) automates the above steps and adds:  
+🔹 **One-click installation** for BBRv1/v2/v3.  
+🔹 **Dynamic tuning** based on network conditions.  
+🔹 **Support for multiple Linux distros** (Debian/Ubuntu/CentOS).  
 
+**👉 Get Started:**  
+```bash
+wget https://github.com/Ya-MIC/bbr-manager/install.sh && sudo bash install.sh
+```
 
+---
 
+### **License**  
+MIT © [Ya-MIC](https://github.com/Ya-MIC)  
 
+---
 
-
-
+This file is **ready to use** in your GitHub repo! Customize the links, commands, or add a **"Benchmarks"** section if needed. Let me know if you'd like a version with more technical details. 🚀
